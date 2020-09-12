@@ -19,7 +19,7 @@ func BubbleSort(elements []int) {
 
 // Sort - receives a slice of integers and returns it in ascending order
 func Sort(elements []int) {
-	if len(elements) < 1000 {
+	if len(elements) < 5000 {
 		BubbleSort(elements)
 		return
 	}
