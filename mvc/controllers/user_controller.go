@@ -1,9 +1,10 @@
 package controllers
 
 import (
-	"encoding/json"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 
 	"github.com/marcio-garcia/go-microservices/mvc/domain"
 
@@ -11,31 +12,25 @@ import (
 )
 
 // GetUser retrieve a user
-func GetUser(response http.ResponseWriter, request *http.Request) {
-	userIDParam := request.URL.Query().Get("id")
-	userID, err := strconv.ParseInt(userIDParam, 10, 64)
+func GetUser(context *gin.Context) {
+	userID, err := strconv.ParseInt(context.Param("id"), 10, 64)
 	if err != nil {
 		apiError := domain.AppError{
 			Message:    "User id must be a number",
 			StatusCode: http.StatusBadRequest,
 			Code:       "bad_request",
 		}
-		jsonValue, _ := json.Marshal(apiError)
-		response.WriteHeader(apiError.StatusCode)
-		response.Write(jsonValue)
+
+		context.JSON(apiError.StatusCode, apiError)
 		return
 	}
 
 	user, apiError := services.UserService.GetUser(uint64(userID))
 
 	if apiError != nil {
-		jsonValue, _ := json.Marshal(apiError)
-		response.WriteHeader(apiError.StatusCode)
-		response.Write(jsonValue)
+		context.JSON(apiError.StatusCode, apiError)
 		return
 	}
 
-	// Return the retrieved user
-	jsonValue, _ := json.Marshal(user)
-	response.Write(jsonValue)
+	context.JSON(http.StatusOK, user)
 }
