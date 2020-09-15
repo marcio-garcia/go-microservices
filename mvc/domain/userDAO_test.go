@@ -12,7 +12,7 @@ import (
 func TestGetUserNotFound(t *testing.T) {
 	var userID uint64 = 0
 	errorMessage := fmt.Sprintf("user %v not found", userID)
-	user, err := domain.GetUser(userID)
+	user, err := domain.UserDAO.GetUser(userID)
 
 	assert.Nil(t, user, "we are not expecting an user with id 0")
 	assert.NotNil(t, err, "we are expecting an error when user id is 0")
@@ -23,12 +23,12 @@ func TestGetUserNotFound(t *testing.T) {
 
 func TestGetUserSuccess(t *testing.T) {
 	var userID uint64 = 1
-	user, err := domain.GetUser(userID)
+	user, err := domain.UserDAO.GetUser(userID)
 
 	assert.Nil(t, err)
 	assert.NotNil(t, user)
 	assert.EqualValues(t, userID, user.ID)
-	assert.EqualValues(t, "Walter", user.FistName)
+	assert.EqualValues(t, "Walter", user.FirstName)
 	assert.EqualValues(t, "White", user.LastName)
 	assert.EqualValues(t, "ww@bb.com", user.Email)
 }
