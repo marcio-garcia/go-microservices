@@ -6,6 +6,6 @@ import (
 )
 
 func createRoutes() {
-	router.GET("/marco", polo.Polo)
+	router.GET("/marco", polo.Marco)
 	router.POST("/repositories", repositories.CreateRepo)
 }

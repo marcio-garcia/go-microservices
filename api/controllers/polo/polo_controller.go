@@ -10,7 +10,7 @@ const (
 	polo = "polo"
 )
 
-// Polo -
-func Polo(context *gin.Context) {
+// Marco -
+func Marco(context *gin.Context) {
 	context.String(http.StatusOK, polo)
 }
