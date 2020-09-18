@@ -4,7 +4,6 @@ import (
 	"strings"
 
 	"github.com/marcio-garcia/go-microservices/api/config"
-	"github.com/marcio-garcia/go-microservices/api/domain/github"
 	"github.com/marcio-garcia/go-microservices/api/providers/githubprovider"
 
 	"github.com/marcio-garcia/go-microservices/api/domain/repositories"
@@ -32,23 +31,11 @@ func (rs *repoService) CreateRepo(input repositories.CreateRepoRequest) (*reposi
 		return nil, errors.CreateBadRequestError("Invalid repository name")
 	}
 
-	request := github.CreateRepoRequest{
-		Name:        input.Name,
-		Description: input.Description,
-		Private:     false,
-	}
-
-	response, err := githubprovider.CreateRepo(config.GetGithubAccessToken(), request)
+	response, err := githubprovider.GithubProvider.CreateRepo(config.GetGithubAccessToken(), input)
 
 	if err != nil {
-		return nil, errors.CreateError(err.StatusCode, err.Message)
+		return nil, errors.CreateError((*err).Status(), (*err).Message())
 	}
 
-	result := repositories.CreateRepoResponse{
-		ID:    response.ID,
-		Name:  response.Name,
-		Owner: response.Owner.Login,
-	}
-
-	return &result, nil
+	return response, nil
 }

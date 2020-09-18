@@ -10,7 +10,7 @@ import (
 
 	"github.com/marcio-garcia/go-microservices/api/clients/restclient"
 
-	"github.com/marcio-garcia/go-microservices/api/domain/github"
+	"github.com/marcio-garcia/go-microservices/api/domain/repositories"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -28,52 +28,52 @@ func TestGetAuthorizationHeader(t *testing.T) {
 
 func TestCreateRepoRestClientError(t *testing.T) {
 	restclient.RestClient = &restClientRestClientErrorMock{}
-	response, err := CreateRepo("", github.CreateRepoRequest{})
+	response, err := GithubProvider.CreateRepo("", repositories.CreateRepoRequest{})
 	assert.Nil(t, response)
 	assert.NotNil(t, err)
-	assert.EqualValues(t, http.StatusInternalServerError, err.StatusCode)
-	assert.EqualValues(t, "Error returned by the REST client", err.Message)
+	assert.EqualValues(t, http.StatusInternalServerError, (*err).Status())
+	assert.EqualValues(t, "Error returned by the REST client", (*err).Message())
 }
 
 func TestCreateRepoInvalidResponseBody(t *testing.T) {
 	restclient.RestClient = &restClientInvalidResponseBodyMock{}
-	response, err := CreateRepo("", github.CreateRepoRequest{})
+	response, err := GithubProvider.CreateRepo("", repositories.CreateRepoRequest{})
 	assert.Nil(t, response)
 	assert.NotNil(t, err)
-	assert.EqualValues(t, http.StatusInternalServerError, err.StatusCode)
-	assert.EqualValues(t, "Invalid response body", err.Message)
+	assert.EqualValues(t, http.StatusInternalServerError, (*err).Status())
+	assert.EqualValues(t, "Invalid response body", (*err).Message())
 }
 
 func TestCreateRepoStatusCodeErrorInvalidResponseBody(t *testing.T) {
 	restclient.RestClient = &restClientStatusCodeErrorInvalidResponseBodyMock{}
-	response, err := CreateRepo("", github.CreateRepoRequest{})
+	response, err := GithubProvider.CreateRepo("", repositories.CreateRepoRequest{})
 	assert.Nil(t, response)
 	assert.NotNil(t, err)
-	assert.EqualValues(t, http.StatusInternalServerError, err.StatusCode)
-	assert.EqualValues(t, "Invalid json response body", err.Message)
+	assert.EqualValues(t, http.StatusInternalServerError, (*err).Status())
+	assert.EqualValues(t, "Invalid json response body", (*err).Message())
 }
 
 func TestCreateRepoStatusCodeError(t *testing.T) {
 	restclient.RestClient = &restClientStatusCodeErrorMock{}
-	response, err := CreateRepo("", github.CreateRepoRequest{})
+	response, err := GithubProvider.CreateRepo("", repositories.CreateRepoRequest{})
 	assert.Nil(t, response)
 	assert.NotNil(t, err)
-	assert.EqualValues(t, http.StatusUnauthorized, err.StatusCode)
-	assert.EqualValues(t, "Requires authentication", err.Message)
+	assert.EqualValues(t, http.StatusUnauthorized, (*err).Status())
+	assert.EqualValues(t, "Requires authentication", (*err).Message())
 }
 
 func TestCreateRepoSuccessInvalidResponseBody(t *testing.T) {
 	restclient.RestClient = &restClientSuccessInvalidResponseBodyMock{}
-	response, err := CreateRepo("", github.CreateRepoRequest{})
+	response, err := GithubProvider.CreateRepo("", repositories.CreateRepoRequest{})
 	assert.Nil(t, response)
 	assert.NotNil(t, err)
-	assert.EqualValues(t, http.StatusInternalServerError, err.StatusCode)
-	assert.EqualValues(t, "Error when trying to unmarshal the successful json response body", err.Message)
+	assert.EqualValues(t, http.StatusInternalServerError, (*err).Status())
+	assert.EqualValues(t, "Error when trying to unmarshal the successful json response body", (*err).Message())
 }
 
 func TestCreateRepoSuccess(t *testing.T) {
 	restclient.RestClient = &restClientSuccessMock{}
-	response, err := CreateRepo("", github.CreateRepoRequest{})
+	response, err := GithubProvider.CreateRepo("", repositories.CreateRepoRequest{})
 	assert.NotNil(t, response)
 	assert.Nil(t, err)
 	assert.EqualValues(t, 1, response.ID)
