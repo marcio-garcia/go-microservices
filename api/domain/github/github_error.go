@@ -8,6 +8,10 @@ type ErrorResponse struct {
 	Errors           []ErrorDetails `json:"errors"`
 }
 
+func (r ErrorResponse) Error() string {
+	return r.Message
+}
+
 // ErrorDetails - error details
 type ErrorDetails struct {
 	Resource string `json:"resource"`
