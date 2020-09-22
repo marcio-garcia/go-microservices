@@ -1,0 +1,14 @@
+mode: set
+github.com/marcio-garcia/go-microservices/api/providers/githubprovider/github_provider.go:21.56,23.2 1 1
+github.com/marcio-garcia/go-microservices/api/providers/githubprovider/github_provider.go:26.123,30.16 4 1
+github.com/marcio-garcia/go-microservices/api/providers/githubprovider/github_provider.go:36.2,38.16 3 1
+github.com/marcio-garcia/go-microservices/api/providers/githubprovider/github_provider.go:43.2,43.31 1 1
+github.com/marcio-garcia/go-microservices/api/providers/githubprovider/github_provider.go:53.2,54.54 2 1
+github.com/marcio-garcia/go-microservices/api/providers/githubprovider/github_provider.go:60.2,60.21 1 1
+github.com/marcio-garcia/go-microservices/api/providers/githubprovider/github_provider.go:30.16,34.3 3 1
+github.com/marcio-garcia/go-microservices/api/providers/githubprovider/github_provider.go:38.16,41.3 2 1
+github.com/marcio-garcia/go-microservices/api/providers/githubprovider/github_provider.go:43.31,45.62 2 1
+github.com/marcio-garcia/go-microservices/api/providers/githubprovider/github_provider.go:49.3,50.29 2 1
+github.com/marcio-garcia/go-microservices/api/providers/githubprovider/github_provider.go:45.62,48.4 2 1
+github.com/marcio-garcia/go-microservices/api/providers/githubprovider/github_provider.go:54.54,58.3 3 1
+github.com/marcio-garcia/go-microservices/api/providers/githubprovider/github_provider.go:63.79,69.2 2 1
